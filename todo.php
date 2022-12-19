@@ -107,6 +107,36 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             </thead>
             <tbody>
 
+<?php
+
+$sql="SELECT * FROM `todo` WHERE username='$username'";
+$result=mysqli_query($conn,$sql);
+$num=mysqli_num_rows($result);
+
+for($i=0;$i<$num;$i++){
+    $row=mysqli_fetch_assoc($result);
+    if($row['setdata']=='Public'){
+        echo '<tr>
+        <th scope="row">'.($i+1).'</th>
+        <td>'.$row['title'].'</td>
+        <td>'.$row['des'].'</td>
+        <td>No Action neesded</td>
+      </tr>';
+    }elseif($row['setdata']=='Private') {
+        echo '<tr>
+        <th scope="row">'.($i+1).'</th>
+        <td>'.$row['title'].'</td>
+        <td>'.$row['des'].'</td>
+        <td>
+        <a href="edit.php?sl='.$row['sl'].'" class="btn btn-primary mx-2 mb-2">Edit</a>
+        <a href="delete.php?sl='.$row['sl'].'" class="btn btn-danger mx-2 mb-2">Delete</a>
+        </td>
+      </tr>';
+    }
+}
+
+?>
+
             </tbody>
         </table>
     </div>
